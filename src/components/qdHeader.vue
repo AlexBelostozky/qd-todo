@@ -47,6 +47,7 @@ export default {
 
 .qd-header__nav-link {
   display: block;
+  font-weight: 400;
   text-decoration: none;
   color: @white;
   padding: 32px 5px;

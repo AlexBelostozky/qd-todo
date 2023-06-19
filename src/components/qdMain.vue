@@ -11,6 +11,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import '../assets/globalStyles/styles.less';
 
+.qdMain {
+  // height: 100%;
+  padding: 32px;
+}
 </style>
