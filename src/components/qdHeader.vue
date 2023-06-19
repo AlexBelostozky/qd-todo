@@ -51,10 +51,16 @@ export default {
   color: @white;
   padding: 32px 5px;
   margin-left: 15px;
+  transition: all .2s ease-in-out;
 
   &:hover,
   &:focus {
     background-color: @dark-blue;
+    outline: none;
+  }
+
+  &:active {
+    background-color: @darkest-blue;
   }
 }
 </style>
