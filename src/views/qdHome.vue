@@ -59,6 +59,6 @@ export default {
   &:active {
     color: @dark-blue;
     background-color: @gray;
-  } 
+  }
 }
 </style>

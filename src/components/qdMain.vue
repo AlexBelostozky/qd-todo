@@ -15,7 +15,6 @@ export default {
 @import '../assets/globalStyles/styles.less';
 
 .qdMain {
-  // height: 100%;
   padding: 32px;
 }
 </style>
