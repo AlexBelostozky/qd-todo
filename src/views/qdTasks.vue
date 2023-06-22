@@ -1,6 +1,14 @@
 <template>
   <div class="qdTasks">
-    <h2>Your tasks</h2>
+    <h2 class="qdTasks__heading">
+      <span
+        v-if="taskList.length !== 0"
+      >Your tasks</span>
+      <span 
+        v-else
+      >Your tasks will be here as soon as you add them</span>
+    </h2>
+
     <form 
     class="qdTasks__form" 
     action="#"
@@ -41,7 +49,7 @@
             class="qdTasks__task-edit-input"
             type="text"
             autofocus
-            v-model="task.description"
+            v-model="task.descriptionDraft"
           >
           
           <button 
@@ -72,6 +80,7 @@
               type="checkbox"
               v-model="task.isComplete"
               class="qdTasks__task-control-input"
+              @change="onTaskCheckboxChange"
             >
           
             <span class="qdTasks__task-control-mark"></span>
@@ -112,9 +121,16 @@ export default {
       taskIdAbsolute: 0
     }
   },
+
+  mounted () {
+    this.checkLocalStorage();
+  },
+
   methods: {
     onTaskInputFocus () {
-      this.cancelTasksEditing();
+      if (this.taskList) {
+        this.cancelTasksEditing();
+      }
     },
 
     addTask () {
@@ -122,39 +138,66 @@ export default {
         this.taskList.push({
           id: this.taskId,
           description: this.inputTask,
+          descriptionDraft: '',
           isComplete: this.isDone,
           isEditing: this.isEditing
         });
+        this.updateLocalStorage();
         this.inputTask = '';
         this.cancelTasksEditing();
       }
     },
 
+    onTaskCheckboxChange () {
+      this.updateLocalStorage();
+      console.log('onTaskCheckboxChange and updateLocalStorage');
+    },
+
     editTask (order) {
-      console.log('Edit ' + order);
       this.taskList[order].isEditing = true;
+
       let otherTasks = this.taskList.filter((_, idx) => idx !== order);
       otherTasks.forEach(task => {
         task.isEditing = false;
       })
+
+      this.taskList[order].descriptionDraft = this.taskList[order].description;
     },
 
-    // submitEditing (order) {
+    submitEditing (order) {
+      if (!this.taskList[order].descriptionDraft) {
+        this.removeTask(order);
+      } else {
+        this.taskList[order].description = this.taskList[order].descriptionDraft;
+      }
+      this.cancelTasksEditing();
+      this.updateLocalStorage();
+    },
 
-    // },
-
-    // resetEditing (order) {
-
-    // },
+    resetEditing (order) {
+      this.taskList[order].isEditing = false;
+    },
 
     removeTask (order) {
       this.taskList.splice(order, 1);
+      this.updateLocalStorage();
     },
 
     cancelTasksEditing () {
       this.taskList.forEach(task => {
         task.isEditing = false;
       });
+    },
+
+    checkLocalStorage () {
+      const localData = JSON.parse(localStorage.getItem('taskList'));
+      if (localData) {
+        this.taskList = localData
+      }
+    },
+
+    updateLocalStorage () {
+      localStorage.setItem('taskList', JSON.stringify(this.taskList))
     }
   }
 }
@@ -165,6 +208,10 @@ export default {
 
 .qdTasks {
   text-align: center;
+}
+
+.qdTasks__heading {
+  line-height: 26px;
 }
 
 .qdTasks__form {
