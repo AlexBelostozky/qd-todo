@@ -29,20 +29,48 @@
 export default {
   name: 'qdForm',
   props: {},
+  data () {
+    return {
+      inputTask: '',
+      taskList: [],
+      isDone: false,
+      isEditing: false,
+      taskIdAbsolute: 0
+    }
+  },
   methods: {
+    onTaskInputFocus () {
+      if (this.taskList) {
+        this.cancelTasksEditing();
+      }
+    },
+
     addTask () {
       if (this.inputTask) {
-        this.taskList.push({
-          id: this.taskId,
+        const newTask = {
+          id: this.taskIdAbsolute,
           description: this.inputTask,
           descriptionDraft: '',
           isComplete: this.isDone,
           isEditing: this.isEditing
-        });
+        }
+        
+        this.$store.commit('addTask', newTask);
+        
         this.updateLocalStorage();
         this.inputTask = '';
         this.cancelTasksEditing();
       }
+    },
+
+    cancelTasksEditing () {
+      this.$store.state.taskList.forEach(task => {
+        task.isEditing = false;
+      });
+    },
+
+    updateLocalStorage () {
+      this.$store.commit('sendDataToLocalStorage');
     }
   }
 }

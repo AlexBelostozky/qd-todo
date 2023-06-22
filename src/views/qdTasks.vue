@@ -2,37 +2,14 @@
   <div class="qdTasks">
     <h2 class="qdTasks__heading">
       <span
-        v-if="taskList.length !== 0"
+        v-if="this.$store.state.taskList.length !== 0"
       >Your tasks</span>
       <span 
         v-else
       >Your tasks will be here as soon as you add them</span>
     </h2>
 
-    <form 
-    class="qdTasks__form" 
-    action="#"
-    >
-      <label 
-        class="visually-hidden" 
-        for="new-task"
-      >Enter your new task:</label>
-      <input 
-        class="qdTasks__input" 
-        type="text" 
-        id="new-task" 
-        placeholder="Your new task" 
-        autocomplete="none"
-        v-model="inputTask"
-        @focus="onTaskInputFocus"
-      >
-      
-      <button 
-        class="qdTasks__submit" 
-        type="submit"
-        @click.prevent="addTask(taskIdAbsolute++)"
-      >Add</button>
-    </form>
+    <qdForm />
 
     <ul class="qdTasks__task-list">
       <li 
@@ -109,16 +86,20 @@
 </template>
 
 <script>
+import qdForm from '../components/qdForm';
+
 export default {
   name: 'qdTasks',
-  components: {},
+  components: {
+    qdForm
+  },
   data () {
     return {
-      inputTask: '',
-      taskList: [],
-      isDone: false,
-      isEditing: false,
-      taskIdAbsolute: 0
+      // inputTask: '',
+      // taskList: [],
+      // isDone: false,
+      // isEditing: false,
+      // taskIdAbsolute: 0
     }
   },
 
@@ -127,29 +108,29 @@ export default {
   },
 
   methods: {
-    onTaskInputFocus () {
-      if (this.taskList) {
-        this.cancelTasksEditing();
-      }
-    },
+    // onTaskInputFocus () {
+    //   if (this.taskList) {
+    //     this.cancelTasksEditing();
+    //   }
+    // },
 
-    addTask () {
-      if (this.inputTask) {
-        const newTask = {
-          id: this.taskIdAbsolute,
-          description: this.inputTask,
-          descriptionDraft: '',
-          isComplete: this.isDone,
-          isEditing: this.isEditing
-        }
+    // addTask () {
+    //   if (this.inputTask) {
+    //     const newTask = {
+    //       id: this.taskIdAbsolute,
+    //       description: this.inputTask,
+    //       descriptionDraft: '',
+    //       isComplete: this.isDone,
+    //       isEditing: this.isEditing
+    //     }
         
-        this.$store.commit('addTask', newTask);
+    //     this.$store.commit('addTask', newTask);
         
-        this.updateLocalStorage();
-        this.inputTask = '';
-        this.cancelTasksEditing();
-      }
-    },
+    //     this.updateLocalStorage();
+    //     this.inputTask = '';
+    //     this.cancelTasksEditing();
+    //   }
+    // },
 
     onTaskCheckboxChange () {
       this.updateLocalStorage();
@@ -185,19 +166,19 @@ export default {
       this.updateLocalStorage();
     },
 
-    cancelTasksEditing () {
-      this.$store.state.taskList.forEach(task => {
-        task.isEditing = false;
-      });
-    },
+    // cancelTasksEditing () {
+    //   this.$store.state.taskList.forEach(task => {
+    //     task.isEditing = false;
+    //   });
+    // },
 
     checkLocalStorage () {
       this.$store.commit('getDataFromLocalStorage');
     },
 
-    updateLocalStorage () {
-      this.$store.commit('sendDataToLocalStorage');
-    }
+    // updateLocalStorage () {
+    //   this.$store.commit('sendDataToLocalStorage');
+    // }
   }
 }
 </script>
@@ -211,69 +192,6 @@ export default {
 
 .qdTasks__heading {
   line-height: 26px;
-}
-
-.qdTasks__form {
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  margin-bottom: 35px;
-}
-
-.qdTasks__input{
-  display: block;
-  font-family: "SF-Pro", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  color: @blue;
-  border: none;
-  border-radius: 50px 0 0 50px;
-  margin: 0;
-  padding: 10px 15px;
-  transition: all .2s ease-in-out;
-
-  &::placeholder {
-    font-family: "SF-Pro", "Arial", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    color: @gray;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: @light-gray;
-    outline: none;
-  }
-}
-
-.qdTasks__submit {
-  font-family: "SF-Pro", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  color: @white;
-  background-color: @blue;
-  border: none;
-  border-radius: 0 50px 50px 0;
-  margin: 0;
-  padding: 10px 15px;
-  transition: all .2s ease-in-out;
-  cursor: pointer;
-
-  &:hover,
-  &:focus {
-    background-color: @dark-blue;
-    outline: none;
-  }
-
-  &:active {
-    background-color: @darkest-blue;
-  }
 }
 
 .qdTasks__task-list {
