@@ -37,7 +37,7 @@
     <ul class="qdTasks__task-list">
       <li 
         class="qdTasks__task"
-        v-for="(task, order) in taskList" 
+        v-for="(task, order) in $store.state.taskList" 
         :key="task.taskId"
       >
         <form 
@@ -135,13 +135,16 @@ export default {
 
     addTask () {
       if (this.inputTask) {
-        this.taskList.push({
-          id: this.taskId,
+        const newTask = {
+          id: this.taskIdAbsolute,
           description: this.inputTask,
           descriptionDraft: '',
           isComplete: this.isDone,
           isEditing: this.isEditing
-        });
+        }
+        
+        this.$store.commit('addTask', newTask);
+        
         this.updateLocalStorage();
         this.inputTask = '';
         this.cancelTasksEditing();
@@ -150,54 +153,50 @@ export default {
 
     onTaskCheckboxChange () {
       this.updateLocalStorage();
-      console.log('onTaskCheckboxChange and updateLocalStorage');
     },
 
     editTask (order) {
-      this.taskList[order].isEditing = true;
+      this.$store.state.taskList[order].isEditing = true;
 
-      let otherTasks = this.taskList.filter((_, idx) => idx !== order);
+      let otherTasks = this.$store.state.taskList.filter((_, idx) => idx !== order);
       otherTasks.forEach(task => {
         task.isEditing = false;
       })
 
-      this.taskList[order].descriptionDraft = this.taskList[order].description;
+      this.$store.state.taskList[order].descriptionDraft = this.$store.state.taskList[order].description;
     },
 
     submitEditing (order) {
-      if (!this.taskList[order].descriptionDraft) {
+      if (!this.$store.state.taskList[order].descriptionDraft) {
         this.removeTask(order);
       } else {
-        this.taskList[order].description = this.taskList[order].descriptionDraft;
+        this.$store.state.taskList[order].description = this.$store.state.taskList[order].descriptionDraft;
       }
       this.cancelTasksEditing();
       this.updateLocalStorage();
     },
 
     resetEditing (order) {
-      this.taskList[order].isEditing = false;
+      this.$store.state.taskList[order].isEditing = false;
     },
 
     removeTask (order) {
-      this.taskList.splice(order, 1);
+      this.$store.state.taskList.splice(order, 1);
       this.updateLocalStorage();
     },
 
     cancelTasksEditing () {
-      this.taskList.forEach(task => {
+      this.$store.state.taskList.forEach(task => {
         task.isEditing = false;
       });
     },
 
     checkLocalStorage () {
-      const localData = JSON.parse(localStorage.getItem('taskList'));
-      if (localData) {
-        this.taskList = localData
-      }
+      this.$store.commit('getDataFromLocalStorage');
     },
 
     updateLocalStorage () {
-      localStorage.setItem('taskList', JSON.stringify(this.taskList))
+      this.$store.commit('sendDataToLocalStorage');
     }
   }
 }
