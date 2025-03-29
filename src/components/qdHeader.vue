@@ -1,23 +1,29 @@
 <template>
   <header class="qd-header">
-    <h1 class="qd-header__title">Quick Deal<br> ToDo list</h1>
+    <h1 class="qd-header__title">
+      Quick Deal<br> ToDo list
+    </h1>
     <nav class="qd-header__nav">
-      <router-link 
-        class="qd-header__nav-link" 
+      <router-link
+        class="qd-header__nav-link"
         to="/"
-      >Home</router-link>
-      
-      <router-link 
-        class="qd-header__nav-link" 
+      >
+        Home
+      </router-link>
+
+      <router-link
+        class="qd-header__nav-link"
         to="/tasks"
-      >Tasks</router-link>
+      >
+        Tasks
+      </router-link>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'qdHeader',
+  name: 'QdHeader',
   props: {}
 }
 </script>

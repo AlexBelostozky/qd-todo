@@ -1,32 +1,32 @@
 <template>
   <ul class="qdTaskList">
-    <li 
-      class="qdTaskList__task"
-      v-for="(task, order) in $store.state.taskList" 
+    <li
+      v-for="(task, order) in $store.state.taskList"
       :key="task.taskId"
+      class="qdTaskList__task"
     >
-      <form 
+      <form
+        v-if="task.isEditing"
         class="qdTaskList__task-edit-form"
         action="#"
-        v-if="task.isEditing"
       >
-        <input 
+        <input
+          v-model="task.descriptionDraft"
           class="qdTaskList__task-edit-input"
           type="text"
           autofocus
-          v-model="task.descriptionDraft"
         >
-        
-        <button 
-          class="qdTaskList__task-edit-submit"  
+
+        <button
+          class="qdTaskList__task-edit-submit"
           type="submit"
           @click.prevent="submitEditing(order)"
         >
           <span class="visually-hidden">Подтвердить изменение</span>
         </button>
 
-        <button 
-          class="qdTaskList__task-edit-reset" 
+        <button
+          class="qdTaskList__task-edit-reset"
           type="reset"
           @click.prevent="resetEditing(order)"
         >
@@ -34,29 +34,29 @@
         </button>
       </form>
 
-      <div 
-        class="qdTaskList__task-control-wrapper"
+      <div
         v-else
+        class="qdTaskList__task-control-wrapper"
       >
-        <label 
+        <label
           class="qdTaskList__task-control"
         >
-          <input 
-            type="checkbox"
+          <input
             v-model="task.isComplete"
+            type="checkbox"
             class="qdTaskList__task-control-input"
             @change="onTaskCheckboxChange"
           >
-          
-          <span class="qdTaskList__task-control-mark"></span>
 
-          <span 
+          <span class="qdTaskList__task-control-mark" />
+
+          <span
             class="qdTaskList__task-description"
-            v-bind:class="{ 'qdTasks__task-description--done': task.isComplete }"
+            :class="{ 'qdTasks__task-description--done': task.isComplete }"
           >{{ task.description }}</span>
         </label>
 
-        <a 
+        <a
           class="qdTaskList__task-edit-button"
           href="#"
           @click.prevent="editTask(order)"
@@ -74,64 +74,64 @@
 
 <script>
 export default {
-  name: 'qdTaskList',
+  name: 'QdTaskList',
   props: {},
   // data () {
-    
+
   // },
 
   mounted () {
-    this.checkLocalStorage();
+    this.checkLocalStorage()
   },
 
   methods: {
     checkLocalStorage () {
-      this.$store.commit('getDataFromLocalStorage');
+      this.$store.commit('getDataFromLocalStorage')
     },
 
     onTaskCheckboxChange () {
-      this.updateLocalStorage();
+      this.updateLocalStorage()
     },
 
     updateLocalStorage () {
-      this.$store.commit('sendDataToLocalStorage');
+      this.$store.commit('sendDataToLocalStorage')
     },
 
     removeTask (order) {
-      this.$store.state.taskList.splice(order, 1);
-      this.updateLocalStorage();
+      this.$store.state.taskList.splice(order, 1)
+      this.updateLocalStorage()
     },
 
     editTask (order) {
-      this.$store.state.taskList[order].isEditing = true;
+      this.$store.state.taskList[order].isEditing = true
 
-      let otherTasks = this.$store.state.taskList.filter((_, idx) => idx !== order);
+      const otherTasks = this.$store.state.taskList.filter((_, idx) => idx !== order)
       otherTasks.forEach(task => {
-        task.isEditing = false;
+        task.isEditing = false
       })
 
-      this.$store.state.taskList[order].descriptionDraft = this.$store.state.taskList[order].description;
+      this.$store.state.taskList[order].descriptionDraft = this.$store.state.taskList[order].description
     },
 
     submitEditing (order) {
       if (!this.$store.state.taskList[order].descriptionDraft) {
-        this.removeTask(order);
+        this.removeTask(order)
       } else {
-        this.$store.state.taskList[order].description = this.$store.state.taskList[order].descriptionDraft;
+        this.$store.state.taskList[order].description = this.$store.state.taskList[order].descriptionDraft
       }
-      this.cancelTasksEditing();
-      this.updateLocalStorage();
+      this.cancelTasksEditing()
+      this.updateLocalStorage()
     },
 
     resetEditing (order) {
-      this.$store.state.taskList[order].isEditing = false;
+      this.$store.state.taskList[order].isEditing = false
     },
 
     cancelTasksEditing () {
       this.$store.state.taskList.forEach(task => {
-        task.isEditing = false;
-      });
-    },
+        task.isEditing = false
+      })
+    }
   }
 }
 </script>

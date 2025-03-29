@@ -2,22 +2,26 @@
   <section class="qdHome">
     <div class="qdHome__content-wrapper">
       <h2>Welcome to Quick Deal ToDo list!</h2>
-    
-      <p class="qdHome__content-description">Complete your tasks quickly and achieve your goals!</p>
+
+      <p class="qdHome__content-description">
+        Complete your tasks quickly and achieve your goals!
+      </p>
     </div>
-    
-    <router-link 
-        class="qdHome__button" 
-        to="/tasks"
-      >Go to your Tasks</router-link>
+
+    <router-link
+      class="qdHome__button"
+      to="/tasks"
+    >
+      Go to your Tasks
+    </router-link>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'qdHome',
+  name: 'QdHome',
   components: {
-    
+
   }
 }
 </script>

@@ -1,33 +1,35 @@
 <template>
-  <form 
-      class="qdForm" 
-      action="#"
+  <form
+    class="qdForm"
+    action="#"
+  >
+    <label
+      class="visually-hidden"
+      for="new-task"
+    >Enter your new task:</label>
+    <input
+      id="new-task"
+      v-model="inputTask"
+      class="qdForm__input"
+      type="text"
+      placeholder="Your new task"
+      autocomplete="none"
+      @focus="onTaskInputFocus"
     >
-      <label 
-        class="visually-hidden" 
-        for="new-task"
-      >Enter your new task:</label>
-      <input 
-        class="qdForm__input" 
-        type="text" 
-        id="new-task" 
-        placeholder="Your new task" 
-        autocomplete="none"
-        v-model="inputTask"
-        @focus="onTaskInputFocus"
-      >
-      
-      <button 
-        class="qdForm__submit" 
-        type="submit"
-        @click.prevent="addTask(taskIdAbsolute++)"
-      >Add</button>
-    </form>
+
+    <button
+      class="qdForm__submit"
+      type="submit"
+      @click.prevent="addTask(taskIdAbsolute++)"
+    >
+      Add
+    </button>
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'qdForm',
+  name: 'QdForm',
   props: {},
   data () {
     return {
@@ -41,7 +43,7 @@ export default {
   methods: {
     onTaskInputFocus () {
       if (this.taskList) {
-        this.cancelTasksEditing();
+        this.cancelTasksEditing()
       }
     },
 
@@ -54,23 +56,23 @@ export default {
           isComplete: this.isDone,
           isEditing: this.isEditing
         }
-        
-        this.$store.commit('addTask', newTask);
-        
-        this.updateLocalStorage();
-        this.inputTask = '';
-        this.cancelTasksEditing();
+
+        this.$store.commit('addTask', newTask)
+
+        this.updateLocalStorage()
+        this.inputTask = ''
+        this.cancelTasksEditing()
       }
     },
 
     cancelTasksEditing () {
       this.$store.state.taskList.forEach(task => {
-        task.isEditing = false;
-      });
+        task.isEditing = false
+      })
     },
 
     updateLocalStorage () {
-      this.$store.commit('sendDataToLocalStorage');
+      this.$store.commit('sendDataToLocalStorage')
     }
   }
 }

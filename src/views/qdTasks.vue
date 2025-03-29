@@ -2,25 +2,25 @@
   <div class="qdTasks">
     <h2 class="qdTasks__heading">
       <span
-        v-if="this.$store.state.taskList.length !== 0"
+        v-if="$store.state.taskList.length !== 0"
       >Your tasks</span>
-      <span 
+      <span
         v-else
       >Your tasks will be here as soon as you add them</span>
     </h2>
 
     <qdForm />
 
-    <qdTaskList/>
+    <qdTaskList />
   </div>
 </template>
 
 <script>
-import qdForm from '../components/qdForm';
-import qdTaskList from '../components/qdTaskList';
+import qdForm from '../components/qdForm'
+import qdTaskList from '../components/qdTaskList'
 
 export default {
-  name: 'qdTasks',
+  name: 'QdTasks',
   components: {
     qdForm,
     qdTaskList

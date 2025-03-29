@@ -1,11 +1,11 @@
-import { createStore } from 'vuex';
+import { createStore } from 'vuex'
 
 interface State {
   taskList: string[]
 }
 
 const store = createStore<State>({
-  state(): State {
+  state (): State {
     return {
       taskList: []
     }
@@ -15,14 +15,14 @@ const store = createStore<State>({
 
   mutations: {
     addTask (state, newTask: string) {
-      state.taskList.push(newTask);
+      state.taskList.push(newTask)
     },
 
     getDataFromLocalStorage (state) {
-      const localData = localStorage.getItem('taskList');
+      const localData = localStorage.getItem('taskList')
 
       if (localData !== null) {
-        state.taskList = JSON.parse(localData) as string[];
+        state.taskList = JSON.parse(localData) as string[]
       }
     },
 
@@ -33,7 +33,7 @@ const store = createStore<State>({
 
   actions: {},
 
-  modules: {},
-});
+  modules: {}
+})
 
 export default store

@@ -20,24 +20,24 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior(to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			return {top: 0}
-		}
-	}
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })
 
-let previousRoute: RouteLocationNormalized | null = null;
-export const getPreviousRoute = () => previousRoute;
+let previousRoute: RouteLocationNormalized | null = null
+export const getPreviousRoute = () => previousRoute
 
 router.beforeEach((to, from, next) => {
-	if (from.name) {
-		previousRoute = from;
-	}
+  if (from.name) {
+    previousRoute = from
+  }
 
-  next();
-});
+  next()
+})
 
 export default router

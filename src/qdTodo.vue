@@ -1,7 +1,7 @@
 <template>
   <div id="qd-todo">
     <qdHeader />
-    <qdMain/>
+    <qdMain />
   </div>
 </template>
 
@@ -10,14 +10,10 @@ import qdHeader from './components/qdHeader.vue'
 import qdMain from './components/qdMain.vue'
 
 export default {
-  name: 'qdTodo',
+  name: 'QdTodo',
   components: {
     qdHeader,
     qdMain
   }
 }
 </script>
-
-<style>
-
-</style>

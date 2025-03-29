@@ -1,12 +1,12 @@
 <template>
   <main class="qdMain">
-    <router-view/>
+    <router-view />
   </main>
 </template>
 
 <script>
 export default {
-  name: 'qdMain',
+  name: 'QdMain',
   props: {}
 }
 </script>
