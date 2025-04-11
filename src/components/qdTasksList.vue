@@ -1,72 +1,76 @@
 <template>
-  <ul class="qdTaskList">
+  <ul class="qdTasksList">
     <li
       v-for="(task, order) in $store.state.taskList"
       :key="task.taskId"
-      class="qdTaskList__task"
+      class="qdTasksList__task"
     >
       <form
         v-if="task.isEditing"
-        class="qdTaskList__task-edit-form"
+        class="qdTasksList__task-edit-form"
         action="#"
       >
         <input
           v-model="task.descriptionDraft"
-          class="qdTaskList__task-edit-input"
+          class="qdTasksList__task-edit-input"
           type="text"
           autofocus
         >
 
         <button
-          class="qdTaskList__task-edit-submit"
+          class="qdTasksList__task-edit-submit"
           type="submit"
+          aria-label="Apply changes"
           @click.prevent="submitEditing(order)"
-        >
-          <span class="visually-hidden">Подтвердить изменение</span>
-        </button>
+        />
 
         <button
-          class="qdTaskList__task-edit-reset"
+          class="qdTasksList__task-edit-reset"
           type="reset"
+          aria-label="Cancel changes"
           @click.prevent="resetEditing(order)"
-        >
-          <span class="visually-hidden">Отменить изменения</span>
-        </button>
+        />
       </form>
 
       <div
         v-else
-        class="qdTaskList__task-control-wrapper"
+        class="qdTasksList__task-control-wrapper"
       >
         <label
-          class="qdTaskList__task-control"
+          class="qdTasksList__task-control"
         >
           <input
             v-model="task.isComplete"
             type="checkbox"
-            class="qdTaskList__task-control-input"
+            class="qdTasksList__task-control-input"
             @change="onTaskCheckboxChange"
           >
 
-          <span class="qdTaskList__task-control-mark" />
+          <span class="qdTasksList__task-control-mark" />
 
           <span
-            class="qdTaskList__task-description"
-            :class="{ 'qdTasks__task-description--done': task.isComplete }"
+            class="qdTasksList__task-description"
+            :class="{ 'qdTasksList__task-description--done': task.isComplete }"
           >{{ task.description }}</span>
         </label>
 
-        <a
-          class="qdTaskList__task-edit-button"
+        <button
+          class="qdTasksList__task-edit-button"
+          type="button"
           href="#"
-          @click.prevent="editTask(order)"
-        >Edit</a>
+          @click="editTask(order)"
+        >
+          Edit
+        </button>
 
-        <a
-          class="qdTaskList__task-remove-button"
+        <button
+          class="qdTasksList__task-remove-button"
+          type="button"
           href="#"
-          @click.prevent="removeTask(order)"
-        >Remove</a>
+          @click="removeTask(order)"
+        >
+          Remove
+        </button>
       </div>
     </li>
   </ul>
@@ -74,11 +78,9 @@
 
 <script>
 export default {
-  name: 'QdTaskList',
-  props: {},
-  // data () {
+  name: 'QdTasksList',
 
-  // },
+  props: {},
 
   mounted () {
     this.checkLocalStorage()
@@ -139,25 +141,25 @@ export default {
 <style lang="less">
 @import '../assets/globalStyles/styles.less';
 
-.qdTaskList {
+.qdTasksList {
   list-style: none;
   margin: 0;
   padding: 0;
   text-align: left;
 }
 
-.qdTaskList__task {
+.qdTasksList__task {
   font-weight: 400;
   min-height: 30px;
   margin-bottom: 12px;
 
-  &:hover .qdTaskList__task-edit-button,
-  &:hover .qdTaskList__task-remove-button {
+  &:hover .qdTasksList__task-edit-button,
+  &:hover .qdTasksList__task-remove-button {
     display: block;
   }
 }
 
-.qdTaskList__task-edit-form {
+.qdTasksList__task-edit-form {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -165,7 +167,7 @@ export default {
   padding: 5px 0 0 40px;
 }
 
-.qdTaskList__task-edit-input {
+.qdTasksList__task-edit-input {
   font-family: "SF-Pro", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -184,7 +186,7 @@ export default {
   }
 }
 
-.qdTaskList__task-edit-submit {
+.qdTasksList__task-edit-submit {
   position: relative;
   top: 0;
   right: 40px;
@@ -233,7 +235,7 @@ export default {
   }
 }
 
-.qdTaskList__task-edit-reset {
+.qdTasksList__task-edit-reset {
   position: relative;
   top: 0;
   right: 40px;
@@ -282,32 +284,32 @@ export default {
   }
 }
 
-.qdTaskList__task-control-wrapper {
+.qdTasksList__task-control-wrapper {
   display: flex;
   align-items: center;
 }
 
-.qdTaskList__task-control {
+.qdTasksList__task-control {
   position: relative;
   margin-right: 10px;
   padding: 5px 0;
   cursor: pointer;
 
-  &:hover .qdTaskList__task-control-mark,
-  &:focus .qdTaskList__task-control-mark {
+  &:hover .qdTasksList__task-control-mark,
+  &:focus .qdTasksList__task-control-mark {
     border-color: @gray;
   }
 }
 
-.qdTaskList__task-control-input {
+.qdTasksList__task-control-input {
   display: none;
 
-  &:checked + .qdTaskList__task-control-mark {
+  &:checked + .qdTasksList__task-control-mark {
     background-color: @light-gray;
     border: none;
   }
 
-  &:checked + .qdTaskList__task-control-mark::before {
+  &:checked + .qdTasksList__task-control-mark::before {
     position: absolute;
     top: 50%;
     left: 34%;
@@ -319,7 +321,7 @@ export default {
     border-radius: 2px;
   }
 
-  &:checked + .qdTaskList__task-control-mark::after {
+  &:checked + .qdTasksList__task-control-mark::after {
     position: absolute;
     top: 57%;
     left: 42%;
@@ -332,7 +334,7 @@ export default {
   }
 }
 
-.qdTaskList__task-control-mark {
+.qdTasksList__task-control-mark {
   position: absolute;
   box-sizing: border-box;
   width: 30px;
@@ -343,7 +345,7 @@ export default {
   border-radius: 6px;
 }
 
-.qdTaskList__task-description {
+.qdTasksList__task-description {
   padding-left: 40px;
 
   &--done {
@@ -352,13 +354,16 @@ export default {
   }
 }
 
-.qdTaskList__task-edit-button {
+.qdTasksList__task-edit-button {
   display: none;
   font-size: 16px;
   text-decoration: none;
   color: @dark-gray;
   margin-right: 10px;
+  background: transparent;
+  border: none;
   transition: all .2s ease-in-out;
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -370,13 +375,16 @@ export default {
   }
 }
 
-.qdTaskList__task-remove-button {
+.qdTasksList__task-remove-button {
   display: none;
   font-size: 16px;
   text-decoration: none;
   color: @dark-red;
   margin-right: 10px;
+  background: transparent;
+  border: none;
   transition: all .2s ease-in-out;
+  cursor: pointer;
 
   &:hover,
   &:focus {

@@ -3,17 +3,18 @@
     <h1 class="qd-header__title">
       Quick Deal<br> ToDo list
     </h1>
+
     <nav class="qd-header__nav">
       <router-link
         class="qd-header__nav-link"
-        to="/"
+        :to="{name: 'home'}"
       >
         Home
       </router-link>
 
       <router-link
         class="qd-header__nav-link"
-        to="/tasks"
+        :to="{name: 'tasks'}"
       >
         Tasks
       </router-link>

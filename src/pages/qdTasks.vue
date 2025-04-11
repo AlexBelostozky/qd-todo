@@ -1,29 +1,30 @@
 <template>
   <div class="qdTasks">
     <h2 class="qdTasks__heading">
-      <span
-        v-if="$store.state.taskList.length !== 0"
-      >Your tasks</span>
-      <span
-        v-else
-      >Your tasks will be here as soon as you add them</span>
+      <span>
+        {{
+          $store.state.taskList.length === 0
+            ? 'Your tasks will be here as soon as you add them'
+            : 'Your tasks'
+        }}
+      </span>
     </h2>
 
     <qdForm />
 
-    <qdTaskList />
+    <qdTasksList />
   </div>
 </template>
 
 <script>
 import qdForm from '../components/qdForm'
-import qdTaskList from '../components/qdTaskList'
+import qdTasksList from '../components/qdTasksList'
 
 export default {
   name: 'QdTasks',
   components: {
     qdForm,
-    qdTaskList
+    qdTasksList
   }
 }
 </script>

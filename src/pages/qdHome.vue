@@ -8,9 +8,10 @@
       </p>
     </div>
 
+    <!-- TODO: Вставить предложение обавторизации -->
     <router-link
       class="qdHome__button"
-      to="/tasks"
+      :to="{name: 'tasks'}"
     >
       Go to your Tasks
     </router-link>
@@ -20,9 +21,7 @@
 <script>
 export default {
   name: 'QdHome',
-  components: {
-
-  }
+  components: {}
 }
 </script>
 

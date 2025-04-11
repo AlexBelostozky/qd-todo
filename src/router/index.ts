@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router'
-import qdHome from '../views/qdHome.vue'
+import qdHome from '@/pages/qdHome.vue'
+import qdTasks from '@/pages/qdTasks.vue'
 
 const routes = [
   {
@@ -10,10 +11,7 @@ const routes = [
   {
     path: '/tasks',
     name: 'tasks',
-    // route level code-splitting
-    // this generates a separate chunk for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/qdTasks.vue')
+    component: qdTasks
   }
 ]
 

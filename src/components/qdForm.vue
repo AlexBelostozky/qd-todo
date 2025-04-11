@@ -7,13 +7,14 @@
       class="visually-hidden"
       for="new-task"
     >Enter your new task:</label>
+
     <input
       id="new-task"
       v-model="inputTask"
       class="qdForm__input"
       type="text"
       placeholder="Your new task"
-      autocomplete="none"
+      autocomplete="off"
       @focus="onTaskInputFocus"
     >
 
@@ -30,7 +31,9 @@
 <script>
 export default {
   name: 'QdForm',
+
   props: {},
+
   data () {
     return {
       inputTask: '',
@@ -40,6 +43,7 @@ export default {
       taskIdAbsolute: 0
     }
   },
+
   methods: {
     onTaskInputFocus () {
       if (this.taskList) {

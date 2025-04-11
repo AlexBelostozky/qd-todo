@@ -1,19 +1,15 @@
 <template>
-  <div id="qd-todo">
-    <qdHeader />
-    <qdMain />
-  </div>
+  <MainLayout />
 </template>
 
-<script>
-import qdHeader from './components/qdHeader.vue'
-import qdMain from './components/qdMain.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import MainLayout from './layouts/MainLayout.vue'
 
-export default {
+export default defineComponent({
   name: 'QdTodo',
   components: {
-    qdHeader,
-    qdMain
+    MainLayout
   }
-}
+})
 </script>
